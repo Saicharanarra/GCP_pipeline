@@ -22,7 +22,7 @@ steps:
       - '--platform'
       - 'managed'
       - '--region'
-      - 'northamerica-northeast1'  
+      - 'northamerica-northeast2'  
 
 # Provide Image Info
 images:

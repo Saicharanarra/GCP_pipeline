@@ -1,11 +1,11 @@
 # Docker Build
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/premium-apex-300708/saicharan-arra/your-app:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA', '.']
 
 # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/premium-apex-300708/saicharan-arra/your-app:$COMMIT_SHA']
+    args: ['push', 'gcr.io/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA']
 
 # Setup Cloud SDK
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -18,7 +18,7 @@ steps:
       - 'deploy'
       - 'web-service'  
       - '--image'
-      - 'gcr.io/premium-apex-300708/saicharan-arra/your-app:$COMMIT_SHA'
+      - 'gcr.io/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA'
       - '--platform'
       - 'managed'
       - '--region'
@@ -26,7 +26,7 @@ steps:
 
 # Provide Image Info
 images:
-  - 'gcr.io/premium-apex-300708/saicharan-arra/your-app:$COMMIT_SHA'
+  - 'gcr.io/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA'
 
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET

@@ -1,19 +1,23 @@
 # Docker Build
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/YOUR_PROJECT_ID/your-app:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/YOUR_PROJECT_ID/saicharan-100930576/your-app:$COMMIT_SHA', '.']
 
 # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/YOUR_PROJECT_ID/your-app:$COMMIT_SHA']
+    args: ['push', 'gcr.io/YOUR_PROJECT_ID/saicharan-100930576/your-app:$COMMIT_SHA']
 
 # Setup Cloud SDK
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['components', 'install', 'beta']
 
+# Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'docker', '--image', 'gcr.io/YOUR_PROJECT_ID/saicharan-100930576/your-app:$COMMIT_SHA', '--platform', 'managed']
+
 # Provide Image Info
 images:
-  - 'gcr.io/YOUR_PROJECT_ID/your-app:$COMMIT_SHA'
+  - 'gcr.io/YOUR_PROJECT_ID/saicharan-100930576/your-app:$COMMIT_SHA'
 
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET

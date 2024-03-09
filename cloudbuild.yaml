@@ -1,12 +1,11 @@
 steps:
   # Build the Docker image using the Docker Cloud Builder
   - name: 'gcr.io/cloud-builders/docker'
-  # args: ['build', '-t', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA', '.']
     args: ['build', '-t', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:latest', '-t', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA', '.']
    
   # Push the image to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$latest']
+    args: ['push', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:latest']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA']
 

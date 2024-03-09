@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose the port on which your Node.js application is running (Cloud Run expects it to be 8080)
-EXPOSE 3000
+EXPOSE 8080
 
 # Define the command to run the application
 CMD [ "npm", "run", "dev" ]

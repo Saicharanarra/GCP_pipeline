@@ -1,18 +1,22 @@
 steps:
   # Build the Docker image using the Docker Cloud Builder
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/GCP-assign2:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA', '.']
    
   # Push the image to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/GCP-assign2:$COMMIT_SHA']
+    args: ['push', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/ypur-app:$COMMIT_SHA']
 
-options:
-# # Set logs bucket behavior to create a user-owned logs bucket in the same region as the build project
+    # Setup Cloud SDK
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['components', 'install', 'beta']
+    
+    # # Set logs bucket behavior to create a user-owned logs bucket in the same region as the build project
+    options:
     defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
     
 images:
-  - 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/GCP-assign2:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA'
 
 
 

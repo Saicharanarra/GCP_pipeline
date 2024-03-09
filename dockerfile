@@ -17,7 +17,7 @@ COPY . .
 EXPOSE 3000
 
 # Define the command to run the application
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "dev" ]
 
 # Health check to improve Cloud Run's ability to determine the health of your application
 HEALTHCHECK --interval=5s CMD curl -f http://localhost:8080/ || exit 1

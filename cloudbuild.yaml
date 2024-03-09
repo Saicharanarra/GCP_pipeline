@@ -1,34 +1,3 @@
-# steps:
-#   # Build the Docker image using the Docker Cloud Builder
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['build', '-t', 'REGION-docker.pkg.dev/$PROJECT_ID/YOUR_ARTIFACT_REGISTRY_NAME/YOUR_IMAGE_NAME:$COMMIT_SHA', '.']
-
-#   # Push the image to Google Artifact Registry
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['push', 'REGION-docker.pkg.dev/$PROJECT_ID/YOUR_ARTIFACT_REGISTRY_NAME/YOUR_IMAGE_NAME:$COMMIT_SHA']
-
-# Deploy the container to Google Cloud Run
-  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  #   entrypoint: 'gcloud'
-  #   args:
-  #     - 'run'
-  #     - 'deploy'
-  #     - '<YOUR-GOOGLE-CLOUD-RUN-SERVICE>'
-  #     - '--image'
-  #     - '<YOUR-ARTIFACT-REGISTRY-PATH>:$COMMIT_SHA'
-  #     - '--region'
-  #     - '<YOUR-GOOGLE-CLOUD-RUN-REGION>'
-  #     - '--platform'
-  #     - 'managed'
-  #     - '--allow-unauthenticated' # Use '--no-allow-unauthenticated' if you don't want to allow unauthenticated access
-
-# options:
-#   # Set logs bucket behavior to create a user-owned logs bucket in the same region as the build project
-#   logging: 'REGIONAL_USER_OWNED_BUCKET'
-
-# images:
-#   - 'REGION-docker.pkg.dev/$PROJECT_ID/YOUR_ARTIFACT_REGISTRY_NAME/YOUR_IMAGE_NAME:$COMMIT_SHA'
-
 steps:
   # Build the Docker image using the Docker Cloud Builder
   - name: 'gcr.io/cloud-builders/docker'
@@ -38,11 +7,13 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/GCP-assign2:$COMMIT_SHA']
 
+options:
+# # Set logs bucket behavior to create a user-owned logs bucket in the same region as the build project
+    logging: REGIONAL_USER_OWNED_BUCKET
+    
 images:
   - 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/GCP-assign2:$COMMIT_SHA'
 
-options:
-# # Set logs bucket behavior to create a user-owned logs bucket in the same region as the build project
-  logging: REGIONAL_USER_OWNED_BUCKET
+
 
   

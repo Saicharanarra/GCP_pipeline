@@ -1,9 +1,12 @@
 steps:
   # Build the Docker image using the Docker Cloud Builder
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA', '.']
+  # args: ['build', '-t', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:latest', '-t', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA', '.']
    
   # Push the image to Google Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$latest']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA']
 
@@ -11,9 +14,25 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['components', 'install', 'beta']
     
+  # Deploy the container to Google Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'your-app'
+      - '--image'
+      - 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:latest'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated' # Use '--no-allow-unauthenticated' if you don't want to allow unauthenticated access
+    
 # Set logs bucket behavior to create a user-owned logs bucket in the same region as the build project
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
 
 images:
+  - 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:latest'
   - 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA'

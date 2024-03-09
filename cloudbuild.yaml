@@ -7,17 +7,13 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA']
 
-    # Setup Cloud SDK
+  # Setup Cloud SDK
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['components', 'install', 'beta']
     
-    # # Set logs bucket behavior to create a user-owned logs bucket in the same region as the build project
-    options:
-    defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
-    
+# Set logs bucket behavior to create a user-owned logs bucket in the same region as the build project
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+
 images:
   - 'us-central1-docker.pkg.dev/premium-apex-300708/saicharan-100930576/your-app:$COMMIT_SHA'
-
-
-
-  

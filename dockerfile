@@ -1,23 +1,32 @@
-# Use an official Node.js runtime as a base image
-FROM node:14-alpine
+# syntax=docker/dockerfile:1
 
-# Set the working directory to /app
-WORKDIR /app
+# Use the node:19.7.0-alpine base image
+FROM node:19.7.0-alpine
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+# Set the environment variable NODE_ENV with a value of production
+ENV NODE_ENV=production
+ENV SQLITE_DB_LOCATION=/labone/todos
 
-# Install dependencies
+# Create a new directory in root called labone and change the ownership to the node user and node group
+RUN mkdir /labone && chown node:node /labone
+
+# Set this new folder as the working directory
+WORKDIR /labone
+
+# Set the user to node
+USER node
+
+# Copy all source files and change the file ownership to the node user and node group
+COPY --chown=node:node . .
+
+# Run the npm install command to install your node.js packages
+# RUN yarn install --production
 RUN npm install
 
-# Copy the entire application to the working directory
-COPY . .
 
-# Expose the port on which your Node.js application is running (Cloud Run expects it to be 8080)
-EXPOSE 8080
+# Set the default execution command to node src/index.js
+CMD ["node", "src/index.js"]
 
-# Define the command to run the application
-CMD [ "npm", "run", "dev" ]
+# Expose port 3000
+EXPOSE 3000
 
-# Health check to improve Cloud Run's ability to determine the health of your application
-HEALTHCHECK --interval=5s CMD curl -f http://localhost:8080/ || exit 1
